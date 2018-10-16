@@ -37,6 +37,7 @@
 #define TM1637_DEFAULT_BLINK_REPEAT   10
 #define TM1637_DEFAULT_CURSOR_POS     0       // 0-MAX-1 (e.g 3)
 #define TM1637_DEFAULT_COLON_ON       false   //
+#define TM1637_DEFAULT_DECIMAL_ON     false   //
 #define TM1637_DEFAULT_BACKLIGHT      100     // 0..100
 
 #define TM1637_MAX_LINES    1                 // number of display lines
@@ -188,6 +189,18 @@ public:
   * When printing more than four characters/ the display will scroll, this setting determines the scrolling speed in ms
   @param [in] printDelay    the print delay in ms
   */
+    /* Turn the decimal on or off
+  * When turing the decimal on, the next displayed text/numbers will have a colon
+  @param [in] setToOn       sets the decimal to on or off
+  */
+  void    setDecimalOn(bool setToOn);
+  /* Get the currrent colon setting
+  */
+  bool    getDecimalOn(void);
+  /* Sets the delay for scrolling text
+  * When printing more than four characters/ the display will scroll, this setting determines the scrolling speed in ms
+  @param [in] printDelay    the print delay in ms
+  */  
   void    setPrintDelay(uint16_t printDelay);
 
   // helpers //////////////////////////////////////////////////////////////////
