@@ -292,8 +292,11 @@ bool  SevenSegmentTM1637::getDecimalOn(void) {
   return (_decimalOn);
 };
 
-void  SevenSegmentTM1637::setDecimalOn(bool setToOn) {
-    _decimalOn = setToOn;
+void  SevenSegmentTM1637::setDecimalOn(bool setToOn, int position) {
+    if (position <=3) {
+      _decimalOn = setToOn;
+      decimalPosition = position;
+    }
 }
 
 void  SevenSegmentTM1637::printRaw(uint8_t rawByte, uint8_t position) {
