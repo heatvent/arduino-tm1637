@@ -38,7 +38,6 @@
 #define TM1637_DEFAULT_CURSOR_POS     0       // 0-MAX-1 (e.g 3)
 #define TM1637_DEFAULT_COLON_ON       false   //
 #define TM1637_DEFAULT_DECIMAL_ON     false   //
-#define TM1637_DEFAULT_DECIMAL_POS    0       //
 #define TM1637_DEFAULT_BACKLIGHT      100     // 0..100
 
 #define TM1637_MAX_LINES    1                 // number of display lines
@@ -308,7 +307,7 @@ protected:
   uint16_t  _printDelay;              // print delay in ms (multiple chars)
   uint8_t   _colonOn;                 // colon bit if set
   uint8_t   _decimalOn;               // decimal bit if set
-  uint8_t   _decimalPosition;         // position of decimal 0, 1, 2, 3 left to right
+  uint8_t   _decimalPosition;         // position of decimal 1, 2, 3, 4 based on position printed
   uint8_t   _rawBuffer[TM1637_MAX_COLOM];// hold the last chars printed to display
 };
 
