@@ -316,10 +316,8 @@ void  SevenSegmentTM1637::printRaw(const uint8_t* rawBytes, size_t length, uint8
     cmd[0] = TM1637_COM_SET_ADR | (position & B111);  // sets address
     memcpy(&cmd[1], rawBytes, length);       // copy bytes
 
-    // print a decimal if this is the decimal position and decimal on is true
-    if (position == _decimalPosition) {
-      cmd[1] |= (_decimalOn)?TM1637_DECIMAL_BIT:0;
-    }
+    // print a decimal at the decimal position when decimal on is true
+    cmd[_decimalPosition] |= (_decimalOn)?TM1637_DECIMAL_BIT:0;
     
     // do we have to print a colon?
     if ( position < 2 ) { // printing after position 2 has never a colon
