@@ -115,6 +115,7 @@ SevenSegmentTM1637::SevenSegmentTM1637(uint8_t pinClk, uint8_t pinDIO) :
   setCursor(0, TM1637_DEFAULT_CURSOR_POS);
   setPrintDelay(TM1637_DEFAULT_PRINT_DELAY);
   setColonOn(TM1637_DEFAULT_COLON_ON);
+  setDecimalOn(TM1637_DEFAULT_DECIMAL_ON);
   setBacklight(TM1637_DEFAULT_BACKLIGHT);
 
   // write command SET_DATA   (Command1) Defaults
@@ -286,6 +287,15 @@ bool  SevenSegmentTM1637::getColonOn(void) {
 void  SevenSegmentTM1637::setColonOn(bool setToOn) {
     _colonOn = setToOn;
 }
+
+bool  SevenSegmentTM1637::getDecimalOn(void) {
+  return (_decimalOn);
+};
+
+void  SevenSegmentTM1637::setDecimalOn(bool setToOn) {
+    _decimalOn = setToOn;
+}
+
 void  SevenSegmentTM1637::printRaw(uint8_t rawByte, uint8_t position) {
   uint8_t cmd[2];
   cmd[0] = TM1637_COM_SET_ADR | position;
