@@ -300,6 +300,7 @@ void  SevenSegmentTM1637::printRaw(uint8_t rawByte, uint8_t position) {
   uint8_t cmd[2];
   cmd[0] = TM1637_COM_SET_ADR | position;
   cmd[1] = rawByte;
+  // if the character we are printing is in position 1 and colon is on add colon
   if (position == 1) { cmd[1]|=(_colonOn)?TM1637_COLON_BIT:0; };
   command(cmd, 2);
 };
@@ -312,6 +313,11 @@ void  SevenSegmentTM1637::printRaw(const uint8_t* rawBytes, size_t length, uint8
     cmd[0] = TM1637_COM_SET_ADR | (position & B111);  // sets address
     memcpy(&cmd[1], rawBytes, length);       // copy bytes
 
+    // print a decimal if this is the decimal position and decimal on is true
+    if (position == decimalPosition) {
+      cmd[1] |= (_decimalOn)?TM1637_DECIMAL_BIT:0;
+    }
+    
     // do we have to print a colon?
     if ( position < 2 ) { // printing after position 2 has never a colon
       if ( position == 0 && length >= 2) {
