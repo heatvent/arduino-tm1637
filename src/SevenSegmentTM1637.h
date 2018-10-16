@@ -191,11 +191,11 @@ public:
   @param [in] printDelay    the print delay in ms
   */
     /* Turn the decimal on or off
-  * When turing the decimal on, the next displayed text/numbers will have a decimal
+  * When turning the decimal on, the next displayed text/numbers will have a decimal
   @param [in] setToOn       sets the decimal to on or off
   */
-  void    setDecimalOn(bool setToOn, int position = 0);
-  /* Get the currrent decimal setting
+  void    setDecimalOn(bool setToOn, uint8_t position = 0);
+  /* Get the current decimal setting
   */
   bool    getDecimalOn(void);
   /* Sets the delay for scrolling text
@@ -308,6 +308,7 @@ protected:
   uint16_t  _printDelay;              // print delay in ms (multiple chars)
   uint8_t   _colonOn;                 // colon bit if set
   uint8_t   _decimalOn;               // decimal bit if set
+  uint8_t   _decimalPosition;         // position of decimal 0, 1, 2, 3 left to right
   uint8_t   _rawBuffer[TM1637_MAX_COLOM];// hold the last chars printed to display
 };
 
