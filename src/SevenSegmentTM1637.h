@@ -38,6 +38,7 @@
 #define TM1637_DEFAULT_CURSOR_POS     0       // 0-MAX-1 (e.g 3)
 #define TM1637_DEFAULT_COLON_ON       false   //
 #define TM1637_DEFAULT_DECIMAL_ON     false   //
+#define TM1637_DEFAULT_DECIMAL_POS    0       //
 #define TM1637_DEFAULT_BACKLIGHT      100     // 0..100
 
 #define TM1637_MAX_LINES    1                 // number of display lines
@@ -193,7 +194,7 @@ public:
   * When turing the decimal on, the next displayed text/numbers will have a decimal
   @param [in] setToOn       sets the decimal to on or off
   */
-  void    setDecimalOn(bool setToOn);
+  void    setDecimalOn(bool setToOn, int position = 0);
   /* Get the currrent decimal setting
   */
   bool    getDecimalOn(void);
