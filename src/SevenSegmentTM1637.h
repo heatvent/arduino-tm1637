@@ -3,12 +3,9 @@
   Created by Bram Harmsen, September 25, 2015
   Released into the public domain.
   Licence: GNU GENERAL PUBLIC LICENSE V2.0
-
   # Changelog
-
   v1.0  25-10-2015
   * First release
-
 */
 
 #ifndef SevenSegmentTM1637_H
@@ -37,6 +34,7 @@
 #define TM1637_DEFAULT_BLINK_REPEAT   10
 #define TM1637_DEFAULT_CURSOR_POS     0       // 0-MAX-1 (e.g 3)
 #define TM1637_DEFAULT_COLON_ON       false   //
+#define TM1637_DEFAULT_DECIMAL_ON     false   //
 #define TM1637_DEFAULT_BACKLIGHT      100     // 0..100
 
 #define TM1637_MAX_LINES    1                 // number of display lines
@@ -97,7 +95,6 @@
 *   3. Set the display brightness (pwm) 0-7 and on or off
 *
 * From the datasheet it might seem that you always have to perform all three commands; setting configuration, setting address and data bytes and display. I'v tested this and this is not true. You can just set only one of these three. But ofcourse you have to make sure that your configuration is set properly. For example if you haven't set the configuration to automatic addresses, you can't just send out 4 data bytes, it won't work. Simlilair, if your display is off and you write some data to it, it won't display. On the other hand most default setting are what you want most of the time.
-
 */
 
 class SevenSegmentTM1637 : public Print {
@@ -105,7 +102,6 @@ class SevenSegmentTM1637 : public Print {
 public:
   // LIQUID CRISTAL API ///////////////////////////////////////////////////////
   /* See http://playground.arduino.cc/Code/LCDAPI for more details.
-
   /* Constructor
   @param [in] pinClk      clock pin (any digital pin)
   @param [in] pinDIO      digital output pin (any digital pin)
@@ -113,7 +109,6 @@ public:
   SevenSegmentTM1637(uint8_t pinClk, uint8_t pinDIO);
   /* Initializes the display
   * Initializes the display, sets some text and blinks the display
-
   @param [in] cols      optional: number of coloms (digits)
   @param [in] rows      optional: number of rows
   */
@@ -149,7 +144,6 @@ public:
   // Liquid cristal optional //////////////////////////////////////////////////
   /* Sets the display backlight
   * The display has 8 PWM modes and an off mode. The function accepts a value from 0 to 100, where 80-100 are the same; full brighness.
-
   @param [in] value       brightness value (0..80(100))
   */
   void    setBacklight(uint8_t value);
@@ -188,6 +182,24 @@ public:
   * When printing more than four characters/ the display will scroll, this setting determines the scrolling speed in ms
   @param [in] printDelay    the print delay in ms
   */
+    /* Turn the decimal on or off
+  * When turning the decimal on, the next displayed text/numbers will have a decimal
+  @param [in] setToOn       sets the decimal to on or off
+  @param [in] position      sets the position/character to write to; if not identified when turning on decimals, defaults to 1 / first character printed
+  */
+  void    setDecimalOn(bool setToOn, uint8_t position = 1);
+     /* Set the decimal position only
+  * Decimal position is in relation to the position being printed.  So if you select 2 for example, the decimal will be added to the second character printed, regardless of it's actual position on the LCD
+  @param [in] position      sets/changes the position/character to write to, defautls to 1 / first character printed
+  */
+  void    setDecimalPosition(uint8_t position = 1);
+  /* Get the current decimal setting
+  */
+  bool    getDecimalOn(void);
+  /* Sets the delay for scrolling text
+  * When printing more than four characters/ the display will scroll, this setting determines the scrolling speed in ms
+  @param [in] printDelay    the print delay in ms
+  */  
   void    setPrintDelay(uint16_t printDelay);
 
   // helpers //////////////////////////////////////////////////////////////////
@@ -293,11 +305,14 @@ protected:
   uint8_t   _cursorPos;               // current cursor position
   uint16_t  _printDelay;              // print delay in ms (multiple chars)
   uint8_t   _colonOn;                 // colon bit if set
+  uint8_t   _decimalOn;               // decimal bit if set
+  uint8_t   _decimalPosition;         // position of decimal 1, 2, 3, 4 based on position printed
   uint8_t   _rawBuffer[TM1637_MAX_COLOM];// hold the last chars printed to display
 };
 
 
 #define TM1637_COLON_BIT        B10000000
+#define TM1637_DECIMAL_BIT      B10000000
 
 // ASCII MAPPINGS
 #define TM1637_CHAR_SPACE       B00000000 // 32  (ASCII)
