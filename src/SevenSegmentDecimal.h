@@ -17,16 +17,13 @@
  #include <WProgram.h>
 #endif
 
-#if (defined(__AVR__))
-#include <avr/pgmspace.h> // Used for PROGMEM (arduino)
-#else
-#include <pgmspace.h> // Used for PROGMEM (esp8266)
-#endif
+#include "SevenSegmentTM1637.h"
 
 // Default values //////////////////////////////////////////////////////////////
 #define TM1637_DEFAULT_DECIMAL_ON     false   //
+#define TM1637_DECIMAL_BIT      B10000000
 
-class SevenSegmentTM1637 : public Print {
+class SevenSegmentDecimal : public SevenSegmentDecimal {
 
 public:
     /* Turn the decimal on or off	
@@ -53,4 +50,4 @@ protected:
   uint8_t   _decimalPosition;         // position of decimal 1, 2, 3, 4 based on position printed
 };
 
-#define TM1637_DECIMAL_BIT      B10000000
+#endif
