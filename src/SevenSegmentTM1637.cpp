@@ -323,6 +323,8 @@ void  SevenSegmentTM1637::printRaw(const uint8_t* rawBytes, size_t length, uint8
     memcpy(&cmd[1], rawBytes, length);       // copy bytes
 
     // print a decimal at the decimal position when decimal on is true
+    // I think this bitmasks the decimal bit to whatever is in the _decimalPosition
+    // I also believe 1 is left most followed by 2, 3 and 4 being the rightmost position
     cmd[_decimalPosition] |= (_decimalOn)?TM1637_DECIMAL_BIT:0;
     
     // do we have to print a colon?
