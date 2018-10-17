@@ -115,6 +115,7 @@ SevenSegmentTM1637::SevenSegmentTM1637(uint8_t pinClk, uint8_t pinDIO) :
   setCursor(0, TM1637_DEFAULT_CURSOR_POS);
   setPrintDelay(TM1637_DEFAULT_PRINT_DELAY);
   setColonOn(TM1637_DEFAULT_COLON_ON);
+  setDecimalOn(TM1637_DEFAULT_DECIMAL_ON);
   setBacklight(TM1637_DEFAULT_BACKLIGHT);
 
   // write command SET_DATA   (Command1) Defaults
@@ -287,10 +288,28 @@ void  SevenSegmentTM1637::setColonOn(bool setToOn) {
     _colonOn = setToOn;
 }
 
+bool  SevenSegmentTM1637::getDecimalOn(void) {
+  return (_decimalOn);
+};
+
+void  SevenSegmentTM1637::setDecimalOn(bool setToOn, uint8_t position) {
+    if (position <=4) {
+      _decimalOn = setToOn;
+      _decimalPosition = position;
+    }
+}
+
+void  SevenSegmentTM1637::setDecimalPosition(uint8_t position) {
+    if (position <=4) {
+      _decimalPosition = position;
+    }
+}
+
 void  SevenSegmentTM1637::printRaw(uint8_t rawByte, uint8_t position) {
   uint8_t cmd[2];
   cmd[0] = TM1637_COM_SET_ADR | position;
   cmd[1] = rawByte;
+  // if the character we are printing is in position 1 and colon is on add colon
   if (position == 1) { cmd[1]|=(_colonOn)?TM1637_COLON_BIT:0; };
   command(cmd, 2);
 };
@@ -303,6 +322,9 @@ void  SevenSegmentTM1637::printRaw(const uint8_t* rawBytes, size_t length, uint8
     cmd[0] = TM1637_COM_SET_ADR | (position & B111);  // sets address
     memcpy(&cmd[1], rawBytes, length);       // copy bytes
 
+    // print a decimal at the decimal position when decimal on is true
+    cmd[_decimalPosition] |= (_decimalOn)?TM1637_DECIMAL_BIT:0;
+    
     // do we have to print a colon?
     if ( position < 2 ) { // printing after position 2 has never a colon
       if ( position == 0 && length >= 2) {
