@@ -20,32 +20,38 @@ void setup() {
 
 // run loop (forever)
 void loop() {
-
-  display.setDecimalOn(true,1);
   
   // First, lets print 1234 and try to move the decimal position each time
+  // In this example with 4 characters the 1 is in position 1, 2 in position 2, etc.  Really its printint the the character number.  So the first character is 1, the 2 and soforth.
+  display.setDecimalOn(true,1);
   display.print("1234");
   delay(1000);
   display.setDecimalPosition(2);
-  delay(1000);
-  display.setDecimalPosition(3);
-  delay(1000);
-  display.setDecimalPosition(4);
-  delay(1000);
-  display.clear();
-  delay(1000);
-  
-  //Next lets try keeping the decimal position at 1 and moving 1234
-  display.setDecimalPosition(1);
   display.print("1234");
   delay(1000);
-  display.print("123");
+  display.setDecimalPosition(3);
+  display.print("1234");
   delay(1000);
-  display.print("1");
+  display.setDecimalPosition(4);
+  display.print("1234");
   delay(1000);
-  display.print("1");
-  delay(1000);
+  display.setDecimalOn(false);
   display.clear();
   delay(1000);
   
+  //Next lets try keeping the decimal position at 1 and moving 5678
+  display.setDecimalOn(true, 1);
+  display.print("5678");
+  delay(1000);
+  display.print("678 ");
+  delay(1000);
+  display.print("78  ");
+  delay(1000);
+  display.print("8   ");
+  delay(1000);
+  display.setDecimalOn(false);
+  display.print("    "); // you have to print to the position to get the decimal to actually turn off, otherwise it stays on even when cleared
+  display.clear();
+  delay(1000);
+
 };
